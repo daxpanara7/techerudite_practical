@@ -1,61 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+📘 Project Summary
+A Laravel 12-based booking system with secure user authentication, dynamic booking form behavior, and optimized booking conflict detection for large-scale performance (1M+ bookings).
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+✅ Features Implemented
+🔐 Authentication
+User Registration with:
 
-## About Laravel
+First Name, Last Name, Email, Password
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Email verification required before login
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Duplicate emails restricted
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+User Login after email verification
 
-## Learning Laravel
+Form validation on all auth inputs
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+📄 Booking Form (Post-login)
+Fields:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Customer Name
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Customer Email
 
-## Laravel Sponsors
+Booking Start & End Date (supports multi-day)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Booking Type: Full Day / Half Day / Custom
 
-### Premium Partners
+Conditional: Booking Slot (for Half Day)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Conditional: Time From / To (for Custom)
 
-## Contributing
+Dynamic field visibility based on booking type using JavaScript
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Validation for required fields and formats
 
-## Code of Conduct
+🚫 Overlap Restriction Logic
+Accurate logic to prevent duplicate/conflicting bookings:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Scenario	Restriction Enforced
+Full Day booked	❌ No other bookings on same day
+Half Day booked (First/Second Half)	❌ No Full Day or overlapping Custom bookings
+Custom Time (e.g., 10–11 AM)	❌ No Full Day, Half Day (First Half), or overlapping Custom
 
-## Security Vulnerabilities
+Supports single-day and multi-day bookings with full validation and collision detection.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+⚡ Performance Consideration
+Booking system tested to handle:
 
-## License
+1,000,000+ records using Seeder
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+10,000+ bookings per day
+
+Booking conflict check uses:
+
+Optimized date range queries
+
+Indexed columns: booking_start_date, booking_end_date, booking_type, booking_slot
+
+Efficient overlap logic scoped to only relevant date ranges
+
+🧪 Testing Done
+Manual test scenarios covered:
+
+Full Day vs. All Types
+
+Half Day vs. Full/Custom
+
+Custom time overlaps
+
+Multi-day booking logic
+
+Seeder created to insert 1 million fake bookings
+
+Overlap checks remain fast and accurate even with 1M+ records
+
+🗂 Tech Stack
+Laravel 12
+
+PHP 8.2+
+
+MySQL
+
+Tailwind CSS (optional UI)
+
+Carbon for date/time handling
+
